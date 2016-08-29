@@ -24,6 +24,18 @@ const handler = (payload, res) => {
       }
     })
 
+    trending('python', (err, repos) => {
+      if (err) throw err
+
+      var attachments = repos.slice(0, 5).map((repo) => {
+        return {
+          title: `${repo.owner}/${repo.title} `,
+          title_link: repo.url,
+          text: `_${repo.description}_\n${repo.language} • ${repo.star}>`,
+          mrkdwn_in: ['text', 'pretext']
+        }
+      })
+
 
     let msg = _.defaults({
       channel: payload.channel_name,
