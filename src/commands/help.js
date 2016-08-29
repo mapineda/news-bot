@@ -14,7 +14,7 @@ let attachments = [
   {
     title: 'newsBot will help you find the hippest repos on GitHub',
     color: '#FF6600',
-    text: '`/newsbot repos` returns hip repos \n`/newsbot javascript` returns hip JavaScript repos',
+    text: '`/newsbot repos` returns hip Javascript repos',
     mrkdwn_in: ['text']
   },
   {
