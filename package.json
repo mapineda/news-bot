@@ -1,0 +1,33 @@
+{
+
+  "name": "news-bot",
+  "description": "news aggregator for hacker news on slack",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./src",
+    "notify": "node ./src/tasks/notify",
+    "test": "standard"
+  },
+  "author": {
+    "email": "hire@marcopineda.com",
+    "name": "Marco Pineda",
+    "url": "http://owlery.club"
+  },
+  "bugs": {
+    "url": "https://github.com/mapineda/news-bot/issues"
+  },
+  "dependencies": {
+
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "news",
+    "slack-bot",
+    "news-bot",
+    "heroku",
+    "github",
+  ]
+
+}
