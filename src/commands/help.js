@@ -12,7 +12,7 @@ const msgDefaults = {
 
 let attachments = [
   {
-    title: 'newsBot will help you find the hippest repos on GitHub',
+    title: 'newsBot will help you find the hippest javascript repos on GitHub',
     color: '#FF6600',
     text: '`/newsbot repos` returns hip Javascript repos',
     mrkdwn_in: ['text']

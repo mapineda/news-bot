@@ -12,7 +12,7 @@ const msgDefaults = {
 }
 
 const handler = (payload, res) => {
-  trending('javascript', (err, repos) => {
+  trending('python', (err, repos) => {
     if (err) throw err
 
     var attachments = repos.slice(0, 5).map((repo) => {
