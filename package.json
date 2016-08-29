@@ -1,7 +1,6 @@
 {
-
-  "name": "news-bot",
-  "description": "news aggregator for hacker news on slack",
+  "name": "newsbot",
+  "description": "newsbot is GitHub's trending open-source page, reincarnated as a Slack bot",
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
@@ -12,22 +11,29 @@
   "author": {
     "email": "hire@marcopineda.com",
     "name": "Marco Pineda",
-    "url": "http://owlery.club"
+    "url": "https://owlery.club"
   },
   "bugs": {
     "url": "https://github.com/mapineda/news-bot/issues"
   },
   "dependencies": {
-
+    "body-parser": "^1.15.0",
+    "botkit": "0.0.7",
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4",
+    "express-http-proxy": "^0.6.0",
+    "github-trending": "^1.3.1",
+    "lodash": "^4.6.1",
+    "slack": "^6.1.0"
   },
   "keywords": [
     "slack",
-    "bot",
-    "news",
     "slack-bot",
-    "news-bot",
-    "heroku",
-    "github",
-  ]
-
+    "bot",
+    "heroku"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": "^5.7.1"
+  }
 }

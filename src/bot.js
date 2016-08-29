@@ -1,84 +1,33 @@
-var request = require('request');
 
+'use strict'
 
-var CONFIG = {
-    "webhook_url": "https://hooks.slack.com/services/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", // The URL for your Slack webhook (see below)
-    "channel": "#bots", // The channel to which the bot will post.
-    "bot_username": "NewsBot", // The username of the bot.
-    "bot_icon_emoji": ":newspaper:", // The emoji icon of the bot that appears in the chat.
-    "post_color": "#FF6600", // The accent color of the posts (HN Orange by default :) )
-    "fallback": "Newsbot: Your automated news aggregator." // The default fallback, should the client be unable to display the messsage.
-};
+const slack = require('slack')
+const _ = require('lodash')
+const config = require('./config')
 
+let bot = slack.rtm.client()
 
-selectAndPost();
+bot.started((payload) => {
+  this.self = payload.self
+})
 
-function selectAndPost() {
-    // Choose a random URL pool from HN, with greater probability of selecting top stories.
-    var api_url = ["https://hacker-news.firebaseio.com/v0/topstories.json", "https://hacker-news.firebaseio.com/v0/newstories.json","https://hacker-news.firebaseio.com/v0/beststories", "https://hacker-news.firebaseio.com/v0/showstories.json", "https://hacker-news.firebaseio.com/v0/topstories.json"];
-    var api_url = api_url[Math.floor(Math.random() * api_url.length)];
+bot.message((msg) => {
+  if (!msg.user) return
+  if (!_.includes(msg.text.match(/<@([A-Z0-9])+>/igm), `<@${this.self.id}>`)) return
 
-    request({
-        url: api_url
-    }, function cb(err, httpResponse, body) {
+  slack.chat.postMessage({
+    token: config('SLACK_TOKEN'),
+    icon_emoji: config('ICON_EMOJI'),
+    channel: msg.channel,
+    username: 'Starbot',
+    text: `beep boop: I hear you loud and clear!"`
+  }, (err, data) => {
+    if (err) throw err
 
-        if (err) {
-            console.error("Newsbot failed to fetch " + api_url + "!");
-	    // Retry if set in config.
-	    if(CONFIG.retry) {
-		    selectAndPost();
-	    }
-        } else {
-            body = JSON.parse(body);
-            var linkID = body[Math.floor(Math.random() * body.length)];
-            var url = "https://hacker-news.firebaseio.com/v0/item/" + linkID + ".json";
+    let txt = _.truncate(data.message.text)
 
-            request(url, function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    console.error("News Scraper failed to fetch " + url + "!");
-                } else {
-                    body = JSON.parse(body);
-                    postLink(body.title, body.url, body.score, body.by);
-                }
-            });
-        }
-    });
-}
+    console.log(`🤖  beep boop: I responded with "${txt}"`)
+  })
+})
 
-function postLink(title, link, score, author) {
-
-    // Construct the call to the Slack webhoook using the scraped link and configuration options.
-    var data = {
-        "channel": CONFIG.channel,
-        "username": CONFIG.bot_username,
-        "icon_emoji": CONFIG.bot_icon_emoji,
-        "attachments": [{
-            "title": title,
-            "title_link": link,
-            "fallback": CONFIG.fallback,
-            "color": CONFIG.post_color,
-            "fields": [{
-                "title": "Author",
-                "value": author,
-                "short": true
-            }, {
-                "title": "Score",
-                "value": score,
-                "short": true
-            }]
-        }]
-    };
-
-    var options = {
-        url: CONFIG.webhook_url,
-        body: JSON.stringify(data),
-        json: true,
-        method: "post"
-    };
-
-    request(options, function cb(err, httpResponse, body) {
-        if (err) {
-            console.error("Newsbot failed to post to Slack! Message: " + JSON.stringify(body));
-        }
-    });
-}
+module.exports = bot
