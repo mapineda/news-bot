@@ -8,8 +8,8 @@
     "HEROKU_APP_NAME": {
       "required": true
     },
-    "STARBOT_COMMAND_TOKEN": {
-      "description": "Slash command token, for the starbot command endpoint",
+    "NEWSBOT_COMMAND_TOKEN": {
+      "description": "Slash command token, for the newsbot command endpoint",
       "required": true
     },
     "SLACK_TOKEN": {
